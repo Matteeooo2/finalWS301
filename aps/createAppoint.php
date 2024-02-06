@@ -69,7 +69,7 @@
     <h2 style="text-align: center;">Add Appointment</h2>
 
     <?php
-    include '..//phpUx/db_connection.php';
+    include '..//aps/db_connection.php';
 
     try {
         $conn = connectDB();
@@ -86,7 +86,7 @@
             if ($userData) {
                 // User data found, render the edit form
     ?>
-                <form action="..//phpUx/createCode.php" method="post">
+                <form action="..//aps/createCode.php" method="post">
                     <input type="hidden" name="pid" value="<?php echo $userData['scd_id']; ?>">
                     <label for="name">Name:</label>
                     <input type="text" name="pname" id="pname" value="<?php echo $userData['scd_time']; ?>" readonly>

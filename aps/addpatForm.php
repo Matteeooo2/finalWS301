@@ -2,8 +2,8 @@
 include 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pname = $_POST['times'];
-    $stock = $_POST['dates'];
+    $name = $_POST['name'];
+    $age = $_POST['age'];
 
     try {
         // Use the function to get a PDO connection
@@ -12,14 +12,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "INSERT INTO schedule (scd_time, scd_date) VALUES (:prod, :sto)";
+        $sql = "INSERT INTO patient (p_name, p_age) VALUES (:name, :email)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':prod', $pname);
-        $stmt->bindParam(':sto', $stock);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $age);
         $stmt->execute();
 
         // Redirect back to the user data page after successful insertion
-        header("Location: ..//phpUi/appointForm.php");
+        header("Location: ..//aps/patientForm.php");
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

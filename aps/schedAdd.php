@@ -76,7 +76,7 @@
 <div id="container">
     <h2 style="text-align: center;">Add Product</h2>
 
-    <form action="..//phpUx/addSched.php" method="post">
+    <form action="..//aps/addSched.php" method="post">
         <label for="product_name">Product Name:</label>
         <input type="time" name="times" id="product_name" required>
 

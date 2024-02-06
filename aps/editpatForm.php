@@ -5,9 +5,9 @@ include 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate and sanitize input data
-    $pid = $_POST["pid"];
-    $pname = $_POST["times"];
-    $pstock = $_POST["dates"];
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $email = $_POST["email"];
 
     // Perform database update
     try {
@@ -15,16 +15,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn = connectDB();
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "UPDATE schedule SET scd_time = :pname, scd_date = :pstock WHERE scd_id = :id";
+        $sql = "UPDATE patient SET p_name = :name, p_age = :email WHERE p_id = :id";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $pid);
-        $stmt->bindParam(':pname', $pname);
-        $stmt->bindParam(':pstock', $pstock);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
 
         $stmt->execute();
 
         // Redirect to the page displaying the updated user or any other page
-        header("Location: ..//phpUi/appointForm.php?error=success");
+        header("Location: ..//aps/patientForm.php?error=success");
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

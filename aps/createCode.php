@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
 
         // Redirect back to the user data page after successful insertion
-        header("Location: ..//phpUi/appointTable.php");
+        header("Location: ..//aps/appointTable.php");
         exit();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();

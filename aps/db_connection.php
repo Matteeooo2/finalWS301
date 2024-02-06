@@ -1,7 +1,7 @@
 <?php
 function connectDB() {
     $host = "localhost";
-    $dbname = "hospital";
+    $dbname = "patient_appointment";
     $username = "root";
     $password = "";
 

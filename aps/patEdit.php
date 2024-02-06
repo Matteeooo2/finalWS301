@@ -66,7 +66,7 @@
     <h2 style="text-align: center;">Edit User</h2>
 
     <?php
-    include '..//phpUx/db_connection.php';
+    include '..//aps/db_connection.php';
 
     try {
         $conn = connectDB();

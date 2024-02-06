@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retrieve Products</title>
+    <title>Retrieve Schedule</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -79,31 +78,33 @@
             display: flex;
             justify-content: space-evenly;
         }
+        .buy-button{
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
 <div id="container">
-    <h2 style="text-align: center;">Product Data</h2>
+    <h2 style="text-align: center;">Schedule Data</h2>
 
 <?php
-include '..//phpUx/db_connection.php';
+include '..//aps/db_connection.php';
 
 try {
     $conn = connectDB();
 
     if ($conn) {
-        $sql = "SELECT
-        appointment.ap_id,
-        patient.p_id,
-        patient.p_name,
-        SCHEDULE.scd_id,
-        SCHEDULE.scd_time,
-        SCHEDULE.scd_date
-    FROM
-        appointment
-    INNER JOIN patient ON appointment.p_id = patient.p_id
-    INNER JOIN SCHEDULE ON appointment.scd_id = SCHEDULE.scd_id";
+        $sql = "SELECT * FROM schedule";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -111,20 +112,28 @@ try {
 
         echo "<table class='table table-striped'>
         <tr class='table-dark'>
-                    <th>Appointment ID</th>
-                    <th>Patient ID</th>
-                    <th>Patient Name</th>
-                    <th>Time</th>
-                    <th>Date</th>
-                    
+                    <th>Schedule ID</th>
+                    <th>Schedule time</th>
+                    <th>Schedule Date</th>
+                    <th>Action</th>
                 </tr>";
         foreach ($result as $row) {
             echo "<tr>
-                    <td>{$row['ap_id']}</td>
-                    <td>{$row['p_id']}</td>
-                    <td>{$row['p_name']}</td>
                     <td>{$row['scd_id']}</td>
+                    <td>{$row['scd_time']}</td>
                     <td>{$row['scd_date']}</td>
+                    <td>
+                    <div class = 'butonRow'>
+                        <form action='schedEdit.php' method='post'>
+                            <input type='hidden' name='edit_product_id' value='{$row['scd_id']}'>
+                            <button type='submit' class='edit-button'>Edit</button>
+                        </form>
+                        <form action='createAppoint.php' method='post'>
+                        <input type='hidden' name='edit_product_id' value='{$row['scd_id']}'>
+                        <button type='submit' class='buy-button'>Appoint</button>
+                    </form>
+                    </div>
+                    </td>
                 </tr>";
         }
         echo "</table>";
@@ -139,8 +148,11 @@ try {
 ?>
 
 <div class="button-container">
-    <a href="appointform.php" class="add-button">Add Appointment</a>
+    <a href="schedAdd.php" class="add-button">Add Schedule</a>
 </div>
+<div class="button-container">
+        <a href="patientForm.php">Back to Patient list</a>
+    </div>
 
 </div>
 
